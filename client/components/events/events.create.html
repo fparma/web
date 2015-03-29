@@ -1,0 +1,156 @@
+<div class="pure-u-1" ng-controller="eventsCreateCtrl">
+	<fieldset>
+		<legend>
+		<h2>Create new event</h2></legend>
+		<span>Fill out the form</span>
+	</fieldset>
+	<form name="form" class="pure-form" novalidate>
+		<div class="pure-g disp-table">
+			<div class="pure-u-1-2 pure-u-l-1-4 outside">
+				<p>Type</p>
+			</div>
+			<div class="pure-u-1-2 pure-u-l-1-4 outside">
+				<select class="pure-u-22-24 center-text"
+					ng-init="event.eventType = event.eventType || 'co'"
+					name="eventType"
+					ng-model="event.eventType">
+					<option value="co">CO</option>
+					<option value="tvt">TvT</option>
+				</select>
+			</div>
+		</div>
+		<div class="pure-g disp-table">
+			<div class="pure-u-1-2 pure-u-l-1-4 outside">
+				<p>Amout of slots:</p>
+			</div>
+			<div class="pure-u-1-2 pure-u-l-1-4 outside">
+				<input type="number"
+				class="pure-u-22-24 center-text"
+				title="2-99"
+				placeholder="99"
+				name="amountSlots"
+				ng-required="true"
+				ng-model="event.amountSlots"
+				ng-pattern="/^[2-9][0-9]?$/"
+				ng-class="{'error': form.amountSlots.$dirty && form.name.$invalid,
+				'valid': form.amountSlots.$dirty && form.amountSlots.$valid}"
+				/>
+			</div>
+		</div>
+		<div class="pure-g disp-table">
+			<div class="pure-u-1-2 pure-u-l-1-4 outside">
+				<p>Event name</p>
+			</div>
+			<div class="pure-u-1-2 pure-u-l-1-4 outside">
+				<input type="text"
+				class="pure-u-22-24"
+				placeholder="Op. Megadeath"
+				name="name"
+				ng-model="event.name"
+				required
+				ng-minlength="2"
+				ng-maxlength="56"
+				ng-pattern="/[A-Z]{4}/i"
+				ng-class="{'error': form.name.$dirty && form.name.$invalid,
+				'valid': form.name.$dirty && form.name.$valid}"/>
+			</div>
+		</div>
+		<div class="pure-g disp-table">
+			<div class="pure-u-1-2 outside">
+				<p>Event image</p>
+			</div>
+			<div class="pure-u-1-2 outside" ng-show="!imageChoice">
+				<button
+				class="pure-button pure-button-primary"
+				ng-click="imageChoice = 'url'">
+				URL
+				</button>
+				<button
+				class="pure-button pure-button-primary"
+				ng-click="imageChoice = 'upload'">
+				Upload
+				</button>
+			</div>
+			<div class="pure-u-1" ng-show="imageChoice == 'url'">
+				<input type="url"
+				class="pure-u-22-24"
+				placeholder="http://domain"/>
+				<button
+				type="button"
+				class="pure-button"
+				ng-click="imageChoice = ''">Abort</button>
+			</div>
+			<div class="pure-u-1" ng-show="imageChoice == 'upload'">
+				<div
+					title=".jpg,.png,.bmp,.gif"
+					ng-file-drop
+					ng-file-select
+					ng-model="imageFile"
+					class="pure-u-22-24 drop-box"
+					drag-over-class="{accept: 'dragover', reject: 'dragover-err', delay:10}"
+					ng-multiple="false"
+					allow-dir="false"
+					accept=".jpg,.png,.bmp,.gif">
+					<span>{{imageFile[0].name || 'Drop image or Click'}}</span>
+				</div>
+				<div class="pure-u-1" style="padding-top: 0.2em;">
+					<button type="button" class="pure-button"
+					ng-click="imageChoice = ''">Abort</button>
+					<button type="button"
+					class="pure-button pure-button-primary"
+					ng-class="{'pure-button-disabled': !imageFile}"
+					>Upload</button>
+				</div>
+				<p ng-no-file-drop class="pure-u-1">File Drag/Drop is not supported for this browser</p>
+			</div>
+		</div>
+		
+		<div class="pure-g disp-table" style="padding-top: 1em">
+			<div class="pure-u-1 outside">
+				<textarea
+					class="pure-u-1"
+					style="resize: vertical"
+					placeholder="Event description"
+					name="description"
+					ng-model="event.description"
+					ng-pattern="/[A-Z]{4}/i"
+					ng-maxlength="8000"
+					ng-class="{'error': form.description.$invalid,
+					'valid': event.description.length && form.description.$valid}">
+				</textarea>
+			</div>
+		</div>
+
+		<div class="pure-g disp-table" style="padding-top: 1em">
+			<div class="pure-u-1 outside">
+				<h2>Groups and roles</h2>
+				<button type="button" class="pure-button pure-button-primary">Upload SQM file</button>
+				<button type="button" class="pure-button pure-button-primary">Enter manually</button>
+				<div
+					title=".sqm"
+					class="pure-u-22-24 drop-box"
+					ng-file-drop
+					ng-file-select
+					ng-model="sqmFile"
+					drag-over-class="{accept: 'dragover', reject: 'dragover-err', delay:10}"
+					ng-multiple="false"
+					allow-dir="false"
+					accept=".sqm">
+					<span>{{sqmFile[0].name || 'Drop SQM or Click'}}</span>
+				</div>
+
+			</div>
+		</div>
+
+		<div>
+			<div class="pure-g disp-table" style="padding-top: 1em">
+				<div class="pure-u-1 outside">
+					<span><input type="checkbox"/> Blufor</span>
+					<span><input type="checkbox"/> Opfor</span>
+					<span><input type="checkbox"/> Greenfor</span>
+					<span><input type="checkbox"/> Civ</span>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

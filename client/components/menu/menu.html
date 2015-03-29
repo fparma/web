@@ -1,0 +1,20 @@
+<a id="menuLink" class="menu-link" ng-click="toggleMobileMenu()" ng-class="{'active': mobileMenuActive}">
+	<!-- Hamburger icon -->
+	<span></span>
+</a>
+<div id="menu" ng-class="{'active': mobileMenuActive}">
+	<div class="pure-menu">
+		<a class="pure-menu-heading" href="#">FPARMA</a>
+		<ul class="pure-menu-list">
+			<li class="pure-menu-item"
+				ng-repeat="link in links"
+				ng-class="{'pure-menu-selected': isActive(link.url), 'menu-item-divided': link.divider}">
+				<a class="pure-menu-link" 
+					blur-after-click ng-click="toggleMobileMenu(true)"
+					href="{{link.url}}">
+					{{link.url | capitalize}}
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>

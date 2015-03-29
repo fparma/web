@@ -1,0 +1,135 @@
+@import 'menu.styl';
+
+body
+  height: 100%
+  width: 100%
+  color: #777
+  background-color: #2e2e2e
+  font-family: 'Roboto', sans-serif;
+  
+h1, h2, h3, h4, h5, h6, p, span
+  color: white
+  
+.pure-img-responsive
+  max-width: 100%
+  height: auto
+  
+.pure-g > div
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+  
+.l-box
+  padding: 1em
+
+/*
+Add transition to containers so they can push in and out.
+*/
+#layout, #menu, .menu-link
+  -webkit-transition: all 0.2s ease-out
+  -moz-transition: all 0.2s ease-out
+  -ms-transition: all 0.2s ease-out
+  -o-transition: all 0.2s ease-out
+  transition: all 0.2s ease-out
+/*
+This is the parent `<div>` that contains the menu and the content area.
+*/
+#layout
+  position: relative
+  padding-left: 0
+#layout.active
+  position: relative
+  left: 150px
+#layout.active #menu
+  left: 150px
+  width: 150px
+#layout.active .menu-link
+  left: 150px
+  
+/*
+The content `<div>` is where all your content goes.
+*/
+.content
+  margin: 0 auto
+  padding: 0 1em
+  max-width: 800px
+  margin-bottom: 50px
+  line-height: 1.6em
+  margin-top: 5em;
+.header
+  margin: 0
+  text-align: center
+  padding: 2.5em 2em 0
+  border-bottom: 1px solid #eee
+.header h1
+  margin: 0.2em 0
+  font-size: 3em
+  font-weight: 300
+.header h2
+  font-weight: 300
+  padding: 0
+  margin-top: 0
+.content-subhead
+  margin: 50px 0 20px 0
+  font-weight: 300
+  color: #888
+  
+.outside{
+    vertical-align: middle;
+    display:table-cell;
+    height:100%;
+}
+
+
+.disp-table { display:table; width:100%; }
+
+.center-text
+  text-align: center
+  
+form
+  .error
+    border: 2px solid red !important
+  .valid
+    border: 2px solid lightgreen !important
+    
+.drop-box {
+  background: #F8F8F8;
+  border: 0.2em dashed #DDD;
+  box-sizing:border-box; 
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
+  text-align: center;
+}
+
+.drop-box
+  span
+    color: black
+    
+.drop-box.dragover {
+  border: 5px dashed blue;
+}
+
+.drop-box.dragover-err {
+  border: 5px dashed red;
+}
+
+
+/* -- Responsive Styles (Media Queries) ------------------------------------- */
+/*
+Hides the menu at `48em`
+*/
+@media (min-width: 48em)
+  .header, .content
+    padding-left: 2em
+    padding-right: 2em
+  #layout
+    padding-left: 150px
+    left: 0
+  #menu
+    left: 150px
+  .menu-link
+    position: fixed
+    left: 150px
+    display: none
+  #layout.active .menu-link
+    left: 150px
