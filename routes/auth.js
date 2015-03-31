@@ -16,12 +16,15 @@ exports.init = function(router) {
     passport.use(new SteamStrategy({
             returnURL: config.hostname + ':' + config.port + config.steam.auth_callback,
             realm: config.hostname + ':' + config.port,
-            profile: false
+            apiKey: config.steam.api_key
+            //profile: false // if no API key
         },
         function(identifier, profile, done) {
             process.nextTick(function() {
                 return done(null, {
-                    id: identifier.substr(identifier.lastIndexOf('/')).split('/')[1]
+                    id: identifier.substr(identifier.lastIndexOf('/')).split('/')[1],
+                    name: profile.displayName,
+                    avatarURL: profile._json.avatar
                 });
             });
         }

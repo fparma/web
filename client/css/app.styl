@@ -5,7 +5,17 @@ body
   width: 100%
   color: #777
   background-color: #2e2e2e
-  font-family: 'Roboto', sans-serif;
+  
+/*
+When setting the primary font stack, apply it to the Pure grid units along
+with `html`, `button`, `input`, `select`, and `textarea`. Pure Grids use
+specific font stacks to ensure the greatest OS/browser compatibility.
+*/
+html, button, input, select, textarea,
+.pure-g [class *= "pure-u"] {
+    /* Set your content font stack here: */
+    font-family: 'Roboto', sans-serif;
+}
   
 h1, h2, h3, h4, h5, h6, p, span
   color: white
@@ -21,6 +31,12 @@ h1, h2, h3, h4, h5, h6, p, span
   
 .l-box
   padding: 1em
+  
+.f-left
+  float: left
+
+.f-right
+  float: right
 
 /*
 Add transition to containers so they can push in and out.
@@ -111,6 +127,22 @@ form
 
 .drop-box.dragover-err {
   border: 5px dashed red;
+}
+
+.btn-xs {
+    font-size: 70%;
+}
+
+.btn-sm {
+    font-size: 85%;
+}
+
+.btn-lg {
+    font-size: 110%;
+}
+
+.btn-xl {
+    font-size: 125%;
 }
 
 

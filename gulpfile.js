@@ -22,7 +22,7 @@ var BROWSER_SYNC_RELOAD_DELAY = 500;
 var CLIENT_FOLDER = './client';
 var DIST_FOLDER = './public';
 var nonJsFiles = [
-    CLIENT_FOLDER + '/**/*.css',
+    CLIENT_FOLDER + '/css/vendor/**/*',
     CLIENT_FOLDER +'/**/*.html',
     CLIENT_FOLDER +'/vendor/**/*'
 ];

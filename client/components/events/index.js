@@ -1,7 +1,7 @@
 var angular = require('angular');
 var name = 'app.events';
 
-angular.module(name, [])
+angular.module(name, ['angularFileUpload'])
 .config(['$routeProvider',
     function($routeProvider) {
 

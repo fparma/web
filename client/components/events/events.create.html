@@ -31,7 +31,8 @@
 				name="amountSlots"
 				ng-required="true"
 				ng-model="event.amountSlots"
-				ng-pattern="/^[2-9][0-9]?$/"
+				ng-min='2'
+				ng-pattern="/^[1-9][0-9]?$/"
 				ng-class="{'error': form.amountSlots.$dirty && form.name.$invalid,
 				'valid': form.amountSlots.$dirty && form.amountSlots.$valid}"
 				/>
@@ -47,10 +48,10 @@
 				placeholder="Op. Megadeath"
 				name="name"
 				ng-model="event.name"
-				required
-				ng-minlength="2"
+				ng-required="true"
+				ng-minlength="3"
 				ng-maxlength="56"
-				ng-pattern="/[A-Z]{4}/i"
+				ng-pattern="/[A-Z]{3}/i"
 				ng-class="{'error': form.name.$dirty && form.name.$invalid,
 				'valid': form.name.$dirty && form.name.$valid}"/>
 			</div>
@@ -75,10 +76,14 @@
 				<input type="url"
 				class="pure-u-22-24"
 				placeholder="http://domain"/>
-				<button
-				type="button"
-				class="pure-button"
-				ng-click="imageChoice = ''">Abort</button>
+				<div style="padding-top: 0.2em">
+					<button
+					type="button"
+					class="pure-button"
+					ng-click="imageChoice = ''">
+					Abort
+					</button>
+				</div>
 			</div>
 			<div class="pure-u-1" ng-show="imageChoice == 'upload'">
 				<div
@@ -106,49 +111,121 @@
 		</div>
 		
 		<div class="pure-g disp-table" style="padding-top: 1em">
-			<div class="pure-u-1 outside">
-				<textarea
-					class="pure-u-1"
-					style="resize: vertical"
-					placeholder="Event description"
-					name="description"
-					ng-model="event.description"
-					ng-pattern="/[A-Z]{4}/i"
-					ng-maxlength="8000"
-					ng-class="{'error': form.description.$invalid,
-					'valid': event.description.length && form.description.$valid}">
-				</textarea>
-			</div>
+			<textarea
+			class="pure-u-23-24"
+			style="resize: vertical"
+			placeholder="Event description"
+			name="description"
+			ng-model="event.description"
+			ng-pattern="/[A-Z]{4}/i"
+			ng-maxlength="8000"
+			ng-class="{'error': form.description.$invalid,
+			'valid': event.description.length && form.description.$valid}">
+			</textarea>
 		</div>
-
-		<div class="pure-g disp-table" style="padding-top: 1em">
+		<div class="pure-u-1" style="padding-top: 2em">
+			<h2>Groups and roles</h2>
+		</div>
+		<div ng-show="!anySideHaveGroups()" class="pure-g disp-table">
 			<div class="pure-u-1 outside">
-				<h2>Groups and roles</h2>
-				<button type="button" class="pure-button pure-button-primary">Upload SQM file</button>
-				<button type="button" class="pure-button pure-button-primary">Enter manually</button>
-				<div
-					title=".sqm"
-					class="pure-u-22-24 drop-box"
-					ng-file-drop
-					ng-file-select
-					ng-model="sqmFile"
-					drag-over-class="{accept: 'dragover', reject: 'dragover-err', delay:10}"
-					ng-multiple="false"
-					allow-dir="false"
-					accept=".sqm">
-					<span>{{sqmFile[0].name || 'Drop SQM or Click'}}</span>
+				<div ng-show="!selectSQM">
+					<button
+					type="button"
+					class="pure-button pure-button-primary"
+					ng-click="selectSQM = true">
+					Upload SQM file
+					</button>
+					<button type="button"
+					class="pure-button pure-button-primary"
+					ng-click="addGroupToSide('blufor')"
+					>Enter manually
+					</button>
 				</div>
-
+				<div ng-show="selectSQM">
+					<div
+						title=".sqm"
+						class="pure-u-23-24 drop-box"
+						style="margin-top: 1em"
+						ng-file-drop
+						ng-file-select
+						ng-model="sqmFile"
+						drag-over-class="{accept: 'dragover', reject: 'dragover-err', delay:10}"
+						ng-multiple="false"
+						allow-dir="false"
+						accept=".sqm">
+						<span>{{sqmFile[0].name || 'Drop SQM or Click'}}</span>
+						<p ng-no-file-drop class="pure-u-1">File Drag/Drop is not supported for this browser</p>
+					</div>
+					<div style="padding-top: 0.2em">
+						<button
+						type="button"
+						class="pure-button"
+						ng-click="selectSQM = false">
+						Abort
+						</button>
+						<button
+						type="button"
+						class="pure-button pure-button-primary"
+						ng-click="">
+						Upload
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
-
-		<div>
-			<div class="pure-g disp-table" style="padding-top: 1em">
-				<div class="pure-u-1 outside">
-					<span><input type="checkbox"/> Blufor</span>
-					<span><input type="checkbox"/> Opfor</span>
-					<span><input type="checkbox"/> Greenfor</span>
-					<span><input type="checkbox"/> Civ</span>
+		<div ng-show="anySideHaveGroups()">
+			<div class="pure-g">
+				<div class="pure-u-1">
+					<p>Playable sides in the event</p>
+				</div>
+				<span
+					class="pure-u-1-4 pure-u-md-4-24"
+					ng-repeat="side in selectableSides">
+					<input type="checkbox"
+					ng-checked="sideHaveGroups(side)"
+					ng-click="addOrClearGroupsFromSide(side, $event)"
+					/> {{side | capitalize}}
+				</span>
+			</div>
+			<div
+				class="pure-g"
+				ng-repeat="side in selectableSides"
+				ng-if="sideHaveGroups(side)">
+				<div class="pure-u-1">
+					<h4>{{side | capitalize}} groups
+					<button type="button" style="margin-left: 1em;"
+					class="pure-button pure-button-primary btn-sm"
+					ng-click="addGroupToSide(side)">
+					Add group
+					</button>
+					</h4>
+				</div>
+				<div
+					class="pure-u-1-2 pure-u-sm-1-3 pure-u-lg-1-4"
+					style="padding: 0.2em;"
+					ng-repeat="group in getGroupsFromSide(side)">
+					<input type="text"
+					class="pure-u-1"
+					value="{{group.name}}"
+					placeholder="Group {{$index+1}}"
+					/>
+					<div class="pure-u-1"
+						style="padding-top:0.1em;">
+						<div class="f-left">
+							<button class="pure-button btn-sm">
+							<i class="fa fa-plus-circle fa-lg"></i>
+							</button>
+							
+							<button class="pure-button btn-sm">
+							<i class="fa fa-minus-circle fa-lg"></i>
+							</button>
+						</div>
+						<div class="f-right">
+							<button class="pure-button btn-sm">
+							<i class="fa fa-times-circle fa-lg"></i>
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

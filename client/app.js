@@ -14,7 +14,6 @@ var events = require('./components/events');
 
 angular.module('app', [
     'ngRoute',
-    'angularFileUpload',
     menu,
     news,
     events
@@ -34,4 +33,9 @@ angular.module('app', [
             redirectTo: '/news'
         });
     }
-]);
+])
+.filter('capitalize', function() {
+    return function(str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
+    };
+});

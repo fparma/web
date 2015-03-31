@@ -7,13 +7,14 @@ function ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
         return next();
     }
-    res.redirect('/login');
+    res.redirect('/');
 }
-
-//router.get('/news', news.list);
-//router.post('/news/new', ensureAuthenticated, news.create);
-
+// Must be first
 auth.init(router);
+
+router.get('/news', news.list);
+router.post('/news/new', ensureAuthenticated, news.create);
+
 
 // catch all
 router.get('*', function(req, res) {
