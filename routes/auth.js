@@ -14,8 +14,8 @@ exports.init = function(router) {
     });
 
     passport.use(new SteamStrategy({
-            returnURL: config.hostname + ':' + config.port + config.steam.auth_callback,
-            realm: config.hostname + ':' + config.port,
+            returnURL: 'http://' + config.hostname + ':' + config.port + config.steam.auth_callback,
+            realm: 'http://' + config.hostname + ':' + config.port,
             apiKey: config.steam.api_key
             //profile: false // if no API key
         },

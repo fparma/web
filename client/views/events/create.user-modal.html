@@ -1,0 +1,34 @@
+<!-- Modal for entering a slot as taken -->
+<modal-dialog show='modal.visible' dialog-title='Enter player for slot'>
+<div class="pure-g">
+	<div class="pure-u-1">
+		<form class="pure-form" name="playerform" novalidate>
+			<input type="text"
+			name="name"
+			ng-model="modal.name"
+			ng-keypress="($event.which === 13) && modal.close(modal.name)"
+			ng-required="true"
+			ng-minlength="2"
+			ng-maxlength="24"
+			ng-pattern="/[A-Z]{2}/i"
+			ng-class="{'error': playerform.name.$dirty && playerform.name.$invalid,
+			'valid': playerform.name.$dirty && playerform.name.$valid}"/
+			/>
+			<div class="f-right">
+				<button type="button"
+				class="pure-button pure-button-primary"
+				ng-click="modal.close(modal.name)"
+				>
+				Accept
+				</button>
+				<button type="button"
+				class="pure-button"
+				ng-click="modal.close()"
+				>
+				Cancel
+				</button>
+			</div>
+		</form>
+	</div>
+</div>
+</modal-dialog>

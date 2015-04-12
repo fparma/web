@@ -1,4 +1,5 @@
 var express = require('express');
+var mongoose = require('mongoose');
 var path = require('path');
 var morgan = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -25,6 +26,17 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(router);
 
-app.listen(config.port).on('listening', function() {
-    console.log('Server listening on: %d', config.port);
+mongoose.connection.on('error',function (err) { 
+  console.log('Mongoose connection error: ' + err);
 });
+mongoose.connection.on('disconnected', function () { 
+  console.log('Mongoose disconnected'); 
+});
+mongoose.connection.on('connected', function () {
+  console.log('Mongoose connected to: %s', config.mongoURI);
+
+	app.listen(config.port).on('listening', function() {
+	    console.log('Server listening on: %d', config.port);
+	});
+}); 
+mongoose.connect(config.mongoURI);

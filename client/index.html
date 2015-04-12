@@ -5,26 +5,31 @@
 	<title>FPARMA</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<base href="/">
-	<link rel="stylesheet" type="text/css" href="css/vendor/pure.css">
-	<link rel="stylesheet" type="text/css" href="css/vendor/grids-responsive.css">
-	<link rel="stylesheet" href="css/vendor/font-awesome/css/font-awesome.min.css">
 
-	<link rel="stylesheet" type="text/css" href="app.min.css">
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/grids-responsive-min.css">
 	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-	<script type="text/javascript" src="vendor/angular/angular.min.js"></script>
-	<script type="text/javascript" src="vendor/angular/angular-route.min.js"></script>
-	<script type="text/javascript" src="vendor/angular/angular-file-upload.js"></script>
+	
+	<link rel="stylesheet" type="text/css" href="css/vendor.min.css">
+	<link rel="stylesheet" type="text/css" href="css/app.min.css">
+
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.15/angular-route.min.js"></script>
+
 </head>
 
 <body ng-app="app">
 	<div id="layout" ng-controller="appNavigationMenu" ng-class="{'active': mobileMenuActive}">
 		<app-menu></app-menu>
-			<div id="main">
-				<div class="content pure-g" ng-view>
-				</div>
-			</div>
+
+		<div id="main">
+			<div class="content pure-g" ng-view></div>
 		</div>
-	<script type="text/javascript" src="app.min.js"></script>
+	</div>
+
+	<script type="text/javascript" src="js/vendor.min.js"></script>	
+	<script type="text/javascript" src="js/app.min.js"></script>
 </body>
 
 </html>

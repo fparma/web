@@ -1,0 +1,43 @@
+<div class="pure-u-1">
+	<img-loading ng-if="!events"></img-loading>
+
+
+
+
+
+
+
+
+<!-- 	<table ng-if="events" class="pure-table pure-table-bordered event-list-table">
+	    <thead>
+	        <tr>
+	            <th>Type</th>
+	            <th>Slots</th>
+	            <th>Name</th>
+	            <th>Date</th>
+	            <th></th>
+	        </tr>
+	    </thead>
+
+	    <tbody>
+	        <tr ng-repeat="event in events">
+	        	<td><span>{{event.eventType}}</span></td>
+	        	<td><span>{{event.amountSlots}}</span></td>
+	        	<td><span>{{event.name}}</span></td>
+	        	<td><span>{{event.date | dateLocalize | date:'d MMMM yyyy. HH:mm'}}</span></td>
+	        	<td><span>aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
+	        		<button type="button" class="pure-button pure-button-primary">
+	        		View
+	        		</button>
+	        	</td>
+	        </tr>
+	    </tbody>
+	</table> -->
+	
+	<p><a href="/events/create">Create event</a></p>
+
+	<!-- target self to not get stuck in angular route -->
+	<p><a href="/auth/steam" target="_self">steam auth</a></p>
+	
+	<!-- <pre>{{events |json}}</pre> -->
+</div>
