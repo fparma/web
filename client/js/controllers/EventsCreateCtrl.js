@@ -75,6 +75,7 @@ module.exports = function(name) {
 			if (!event.slots[side]) event.slots[side] = {};
 
 			side = event.slots[side];
+
 			
 			if (!side.groups) side.groups = [];
 
@@ -82,6 +83,7 @@ module.exports = function(name) {
 		};
 
 		$scope.setImageChoice = function(choice) {
+			if (!choice) $scope.imageUploadError = null;
 			$scope.imageChoice = choice;
 		};
 
@@ -147,18 +149,17 @@ module.exports = function(name) {
 
 		$scope.uploadImage = function(file) {
 			$scope.imageUploadError = null;
-			$scope.uploadedImageUrl = null;
+			event.imageUrl = null;
 			
 			$upload.upload({
 	            url: 'upload/event-img',
 	            file: file
             }).success(function(response) {
-            	$scope.uploadedImageUrl = response.data;
+            	event.imageUrl = response.data;
             }).error(function(response) {
 				$scope.imageUploadError = response.error;
             });
 		};
-
 
 		$scope.uploadSqmFile = function(file) {
 			$scope.sqmUploadError = null;

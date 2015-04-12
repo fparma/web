@@ -21,7 +21,6 @@ function ensureAdmin(req, res, next) {
     res.status(401).end();
 }
 
-
 // Must be first
 auth.init(router);
 
@@ -30,9 +29,8 @@ router.post('/news/new', ensureAuthenticated, news.create);
 
 router.get('/events/list', events.list);
 router.post('/events/create-new', events.create);
-router.post('/upload/event-img', events.uploadImage, function() {});
-// needs a dummy next, response is sent from onfileuploadcomplete
-router.post('/upload/event-sqm', events.uploadSqmFile, function(req, res){});
+router.post('/upload/event-img', events.uploadImage);
+router.post('/upload/event-sqm', events.uploadSqmFile);
 
 // catch all for SPA site
 router.get('*', function(req, res) {

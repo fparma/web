@@ -1,4 +1,4 @@
-<div class="pure-u-1" ng-controller="eventsCreateCtrl">
+<div class="pure-u-1">
 
 	<ng-include src="getUserModalURL()"></ng-include>
 
@@ -96,10 +96,14 @@
 			<div class="pure-u-1-2 outside">
 				<p>Event image (opt)</p>
 			</div>
-			<div class="pure-u-1-2 outside" ng-if="uploadedImageUrl">
-				<img class="pure-img-responsive" ng-src="{{uploadedImageUrl}}" alt="image">
+			<div class="pure-u-1-2 outside" ng-if="event.imageUrl">
+				<img class="pure-img-responsive"
+				style="max-height: 10em"
+				ng-src="{{event.imageUrl}}"
+				alt="image"
+				>
 			</div>
-			<div class="pure-u-1-2 outside" ng-if="!imageChoice && !uploadedImageUrl">
+			<div class="pure-u-1-2 outside" ng-if="!imageChoice && !event.imageUrl">
 				<button type="button"
 				class="pure-button pure-button-primary"
 				ng-click="setImageChoice('url')">
@@ -111,19 +115,26 @@
 				Upload
 				</button>
 			</div>
-			<div class="pure-u-1" ng-if="imageChoice == 'url' && !uploadedImageUrl">
+			<div class="pure-u-1" ng-if="imageChoice == 'url' && !event.imageUrl">
 				<input type="url"
 				class="pure-u-22-24"
-				placeholder="http://domain"/>
+				placeholder="http://domain"/
+				ng-model="enteredImageUrl"
+				>
 				<div style="padding-top: 0.2em">
 					<button type="button"
 					class="pure-button"
 					ng-click="setImageChoice('')">
 					Abort
 					</button>
+					<button type="button"
+					class="pure-button pure-button-primary"
+					ng-click="event.imageUrl = enteredImageUrl">
+					Select
+					</button>
 				</div>
 			</div>
-			<div class="pure-u-1" ng-if="imageChoice == 'upload' && !uploadedImageUrl">
+			<div class="pure-u-1" ng-if="imageChoice == 'upload' && !event.imageUrl">
 				<div
 					title=".jpg,.png,.bmp,.gif"
 					ng-file-drop
@@ -146,7 +157,7 @@
 					>Upload</button>
 				</div>
 				<p ng-no-file-drop class="pure-u-1">File Drag/Drop is not supported for this browser</p>
-				<p ng-if="sqmUploadError" style="color: red">{{sqmUploadError}}</p>
+				<p ng-if="imageUploadError" style="color: red">{{imageUploadError}}</p>
 			</div>
 		</div>
 		
@@ -201,16 +212,18 @@
 						<button
 						type="button"
 						class="pure-button"
-						ng-click="selectSQM = false">
+						ng-click="selectSQM = false; sqmUploadError = null; sqmFile = null;">
 						Abort
 						</button>
 						<button
 						type="button"
 						class="pure-button pure-button-primary"
+						ng-disabled="!sqmFile[0]"
 						ng-click="uploadSqmFile(sqmFile[0])">
 						Upload
 						</button>
 					</div>
+					<p ng-if="sqmUploadError" style="color: red">{{sqmUploadError}}</p>
 				</div>
 			</div>
 		</div>
