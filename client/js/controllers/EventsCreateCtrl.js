@@ -11,7 +11,8 @@ module.exports = function(name) {
 
     }])
 
-	.controller('eventsCreateCtrl', ['$scope', '$http', '$upload', function($scope, $http, $upload) {
+	.controller('eventsCreateCtrl', ['$scope', '$http', '$upload', '$location',
+		function($scope, $http, $upload, $location) {
 		
 		$scope.getSideTemplateURL = function() {
 			return 'views/events/create.side.html';
@@ -21,12 +22,16 @@ module.exports = function(name) {
 			return 'views/events/create.user-modal.html';
 		};
 
+		var event = $scope.event = {
+			slots: {},
+		};
+
+		$scope.selectableSides = ['blufor', 'opfor', 'greenfor', 'civilian'];
 		//@const
 		var MAX_UNITS_PER_GROUP = 20;
 		var AMOUNT_UNITS_IN_NEW_GROUP = 8;
 
 		var isArr = Array.isArray;
-		$scope.selectableSides = ['blufor', 'opfor', 'greenfor', 'civilian'];
 
 		var modal = $scope.modal = {
 			visible: false,
@@ -47,10 +52,6 @@ module.exports = function(name) {
 			modal.show(unit.player, function onEnteredName(name) {
 				unit.player = name;
 			});
-		};
-		
-		var event = $scope.event = {
-			slots: {}
 		};
 
 		$scope.addUnitToGroup = function(group) {
@@ -87,14 +88,11 @@ module.exports = function(name) {
 			$scope.imageChoice = choice;
 		};
 
-		$scope.addOrClearGroupsFromSide = function(side, evt) {
-			var boxChecked = evt.target.checked;
-			if (!boxChecked) {
-				// clear groups from the side
+		$scope.addOrClearGroupsFromSide = function(side) {
+			if ($scope.sideHaveGroups(side)) {
 				event.slots[side].groups = [];
 				return;
 			}
-
 			$scope.addGroupToSide(side);
 			
 		};
@@ -182,11 +180,18 @@ module.exports = function(name) {
 		}
 
 		$scope.submit = function() {
+			$scope.sending = true;
+			$scope.submitErrors = null;
 			event.date = getEventIsoDate();
+			event.amountSlots = $scope.getTotalSlotAmount();
 
 			$http.post('/events/create-new', event)
 			.success(function(result) {
-				console.log(result);
+				$scope = {};
+				$location.path("/events");
+			}).error(function(response) {
+				$scope.submitErrors = response.error;
+				$scope.sending = false;
 			});
 		};
 

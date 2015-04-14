@@ -1,10 +1,11 @@
 var mongoose = require('mongoose');
 var moment = require('moment');
 var slug = require('slug');
-var fastimage = require("fastimage"); // Note: it's not an NPM module yet.
+//var fastimage = require("fastimage"); // broken
 
 var Schema = mongoose.Schema;
 var groupSchema = require('./group');
+
 
 var eventSchema = new Schema({
     eventType: {
@@ -20,7 +21,7 @@ var eventSchema = new Schema({
     imageUrl: {
         type: String,
         trim: true,
-        validate: [validateImage, 'Could not validate image. Ensure type is jpg/png/bmp/gif']
+        //validate: [validateImage, 'Could not validate image. Ensure type is jpg/png/bmp/gif']
     },
     date: {
         type: Date,
@@ -31,7 +32,8 @@ var eventSchema = new Schema({
                 console.error('faulty date: ' + v.toString());
                 v = moment.utc();
             }
-            if (v.minutes() >= 15 &&  v.minutes() <= 45)
+            var min = v.minutes();
+            if (min >= 15 &&  min <= 45)
                 v.minutes(30);
             else
                 v.minutes(0);
@@ -53,6 +55,11 @@ var eventSchema = new Schema({
         trim: true,
         minlength: 4,
         maxlength: 56
+    },
+    description: {
+        type: String,
+        trim: true,
+        maxlength: 8192
     },
     amountSlots: {
         type: Number,
@@ -91,17 +98,20 @@ function validateEventDate(eventDate) {
     return (eventDate < refTime);
 }
 
+/*
+// bad deps
 function validateImage(image, callback) {
-    fastimage(image.url, function(err, img) {
+    fastimage.type(image.url, function(err, info) {
         if (err) {
             console.error(err);
             return callback(false);
         }
         // todo: maybe check height and weight ? img.width, img.height
 
-        callback(img && 'png jpg jpeg bmp gif'.split(' ').indexOf(img.type) !== -1);
+        callback('png jpg jpeg bmp gif'.split(' ').indexOf(info) !== -1);
     });
 }
+*/
 
 eventSchema.pre('validate', function(next) {
     var link =

@@ -1,43 +1,64 @@
-<div class="pure-u-1">
-	<img-loading ng-if="!events"></img-loading>
+<h1 class="header">Upcoming events</h1>
+<img-loading ng-if="!events"></img-loading>
 
 
+<p><a class="pure-button" href="/events/create">Create event</a></p>
+<p ng-if="error">{{error}}</p>
 
+<p ng-if="!(events | filter: {passed: 'false'}).length">No upcoming events!</p>
+<table class="mt-2 pure-table pure-table-bordered event-list"
+	ng-if="(events | filter: {passed: 'false'}).length">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Name</th>
+        </tr>
+    </thead>
 
+    <tbody>
+        <tr ng-repeat="event in events | filter:{passed: 'false'}">
+            <td>
+	            <a class="pure-button"
+				href="/events/event/{{event.permalink}}">
+					<span><i class="fa fa-lg fa-caret-square-o-right"></i></span>
+				</a>
+			</td>
+            <td>
+            	<span>{{event.date | dateLocalize | date:'d MMMM yyyy. HH:mm'}}</span>
+        	</td>
+            <td>
+            	<span>{{event.eventType}} {{event.amountSlots}} - {{event.name}}</span>
+        	</td>
+        </tr>
+    </tbody>
+</table>
 
+<h2 class="header">Previous events</h2>
+<p ng-if="!(events | filter: {passed: 'true'}).length">No previous events!</p>
+<table class="mt-2 pure-table pure-table-bordered event-list" ng-if="(events | filter: {passed: 'true'}).length">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Name</th>
+        </tr>
+    </thead>
 
-
-
-<!-- 	<table ng-if="events" class="pure-table pure-table-bordered event-list-table">
-	    <thead>
-	        <tr>
-	            <th>Type</th>
-	            <th>Slots</th>
-	            <th>Name</th>
-	            <th>Date</th>
-	            <th></th>
-	        </tr>
-	    </thead>
-
-	    <tbody>
-	        <tr ng-repeat="event in events">
-	        	<td><span>{{event.eventType}}</span></td>
-	        	<td><span>{{event.amountSlots}}</span></td>
-	        	<td><span>{{event.name}}</span></td>
-	        	<td><span>{{event.date | dateLocalize | date:'d MMMM yyyy. HH:mm'}}</span></td>
-	        	<td><span>aaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span>
-	        		<button type="button" class="pure-button pure-button-primary">
-	        		View
-	        		</button>
-	        	</td>
-	        </tr>
-	    </tbody>
-	</table> -->
-	
-	<p><a href="/events/create">Create event</a></p>
-
-	<!-- target self to not get stuck in angular route -->
-	<p><a href="/auth/steam" target="_self">steam auth</a></p>
-	
-	<!-- <pre>{{events |json}}</pre> -->
-</div>
+    <tbody>
+        <tr ng-repeat="event in events | filter:{passed: 'true'}">
+            <td>
+                <a class="pure-button"
+                href="/events/event/{{event.permalink}}">
+                    <span><i class="fa fa-lg fa-caret-square-o-right"></i></span>
+                </a>
+            </td>
+            <td>
+                <span>{{event.date | dateLocalize | date:'d MMMM yyyy. HH:mm'}}</span>
+            </td>
+            <td>
+                <span>{{event.eventType}} {{event.amountSlots}} - {{event.name}}</span>
+            </td>
+        </tr>
+    </tbody>
+</table>

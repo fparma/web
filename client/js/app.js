@@ -22,7 +22,6 @@ angular.module('app', [
     directives,
     filters
 ])
-
 .config(['$locationProvider', '$routeProvider', 'ngModalDefaultsProvider',
     function($locationProvider, $routeProvider, ngModalDefaultsProvider) {
 

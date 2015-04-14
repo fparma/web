@@ -33,7 +33,7 @@ angular.module(name, [])
 })
 .directive('imgLoading', function(){
     return {
-        template: '<div class="pure-g"><div class="pure-u-1-3"></div> <div class="pure-u-1-3"><img class="pure-img-responsive" style="display: block; margin: auto;" src="img/ajaxload.gif" alt="loading..."/></div> <div class="pure-u-1-3"></div></div>'
+        template: '<div class="pure-g loading-img"><div class="pure-u-1-3"></div> <div class="pure-u-1-3"><img class="pure-img-responsive" style="display: block; margin: auto;" src="img/ajaxload.gif" alt="loading..."/></div> <div class="pure-u-1-3"></div></div>'
     };
 });
 

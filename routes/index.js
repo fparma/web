@@ -14,7 +14,6 @@ function ensureAuthenticated(req, res, next) {
 }
 
 function ensureAdmin(req, res, next) {
-    console.log(req.session);
     if (req.isAuthenticated()) {
         return next();
     }
@@ -24,17 +23,17 @@ function ensureAdmin(req, res, next) {
 // Must be first
 auth.init(router);
 
-router.get('/news', news.list);
-router.post('/news/new', ensureAuthenticated, news.create);
+//router.get('/news', news.list);
+//router.post('/news/new', ensureAuthenticated, news.create);
 
+router.get('/event/:eventId', events.findOne);
 router.get('/events/list', events.list);
 router.post('/events/create-new', events.create);
 router.post('/upload/event-img', events.uploadImage);
 router.post('/upload/event-sqm', events.uploadSqmFile);
 
-// catch all for SPA site
+// catch all 
 router.get('*', function(req, res) {
-    // res.redirect('/');
     res.sendFile('index.html', {
         root: 'public'
     });

@@ -2,8 +2,8 @@ var angular = require('angular');
 
 module.exports = function(name) {
     angular.module(name)
-    .controller('appNavigationMenu', ['$scope', '$location', '$window', '$timeout',
-        function($scope, $location, $window, $timeout) {
+    .controller('appNavigationMenu', ['$scope', '$http', '$location', '$window', '$timeout',
+        function($scope, $http, $location, $window, $timeout) {
 
             $scope.mobileMenuActive = false;
             $scope.links = [{
@@ -16,6 +16,14 @@ module.exports = function(name) {
             }, {
                 url: 'about'
             }];
+
+            function init() {
+                $http.get('/auth/check')
+                .success(function(data) {
+                    if (data.steamName) $scope.steamName = data.steamName;
+                });
+            }
+            init();
 
             $scope.toggleMobileMenu = function(linkedClicked) {
                 if (linkedClicked) {

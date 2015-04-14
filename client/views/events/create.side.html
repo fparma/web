@@ -1,79 +1,79 @@
-<div class="pure-g">
-	<div class="pure-u-1">
-		<p>Playable sides in the event</p>
-	</div>
+<div class="mt-2">
+	<p>Sides:</p>
+	<button type="button" class="pure-button grp-btn-fix"
+	 	ng-repeat="side in selectableSides"
+	 	ng-class="{'grp-btn-selected': sideHaveGroups(side)}"
+		ng-click="addOrClearGroupsFromSide(side)">
+		<span>{{side | capitalize}}</span>
+	</button>
 
-	<span
-		class="pure-u-1-4 pure-u-md-4-24"
-		ng-repeat="side in selectableSides">
-		<input type="checkbox"
-		ng-checked="sideHaveGroups(side)"
-		ng-click="addOrClearGroupsFromSide(side, $event)"
-		/> {{side | capitalize}}
-	</span>
-</div>
-<div
-	class="pure-g"
-	ng-repeat="side in selectableSides"
-	ng-if="sideHaveGroups(side)">
-	<div class="pure-u-1">
-		<h4>{{side | capitalize}} groups
-		<button type="button" style="margin-left: 1em;"
-		class="pure-button pure-button-primary btn-sm"
-		ng-click="addGroupToSide(side)">
-		Add group
-		</button>
-		</h4>
-	</div>
-	<div
-		class="pure-u-1-2 pure-u-sm-1-3 pure-u-lg-1-4"
-		style="padding: 0.2em;"
-		ng-repeat="group in getGroupsFromSide(side)">
-		<input type="text"
-		class="pure-u-1"
-		ng-model="group.name"
-		placeholder="Group {{$index+1}} name"
-		/>
-		<div class="pure-u-1"
-			style="padding-top: 0.2em; padding-bottom: 1em">
-			<div class="f-left">
-				<button type="button" class="pure-button btn-sm"
-				ng-click="addUnitToGroup(group)"
-				tooltips tooltip-title="'Add unit to group'" tooltip-side="top" tooltip-try="0">
-				<i class="fa fa-plus-circle fa-lg"></i>
-				</button>
-				
-				<button type="button" class="pure-button btn-sm"
-				tooltips tooltip-title="'Remove unit from group'" tooltip-side="top" tooltip-try="0"
-				ng-click="removeUnitFromGroup(side, group, $index)">
-				<i class="fa fa-minus-circle fa-lg"></i>
-				</button>
-			</div>
-			<div class="f-right">
-				<button type="button" class="pure-button btn-sm"
-				tooltips tooltip-title="'Remove group'"
+	<div class="mt-2" 
+		ng-repeat="side in selectableSides"
+		ng-if="sideHaveGroups(side)">
+		<p>{{side | capitalize}} groups
+			<button type="button"
+				class="pure-button btn-sm"
+				style="margin-left: 0.4em"
+				tooltips tooltip-title="'Add group'"
 				tooltip-side="top"
 				tooltip-try="0"
 				tooltip-show-trigger="mouseover" 
 				tooltip-hide-trigger="mouseleave click" 
-				ng-click="removeGroupFromSide(side, $index)">
-				<i class="fa fa-times-circle fa-lg"></i>
-				</button>
+				ng-click="addGroupToSide(side)">
+				<i class="fa fa-plus"></i>
+			</button>
+		</p>
+		<div class="pure-g mt-2">
+			<div class="pure-u-1-2 pure-u-sm-1-3 pure-u-lg-1-4 group-container"
+			ng-repeat="group in getGroupsFromSide(side)">
+				<input type="text"
+				class="pure-u-1"
+				ng-model="group.name"
+				placeholder="Group {{$index+1}} name"
+				/>
+				<div class="pure-u-1"
+					style="padding-top: 0.2em; padding-bottom: 1em">
+					<div class="f-left">
+						<button type="button" class="pure-button btn-sm"
+						ng-click="addUnitToGroup(group)"
+						tooltips tooltip-title="'Add unit to group'" tooltip-side="top" tooltip-try="0">
+						<i class="fa fa-plus-circle fa-lg"></i>
+						</button>
+						
+						<button type="button" class="pure-button btn-sm"
+						tooltips tooltip-title="'Remove unit from group'" tooltip-side="top" tooltip-try="0"
+						ng-click="removeUnitFromGroup(side, group, $index)">
+						<i class="fa fa-minus-circle fa-lg"></i>
+						</button>
+					</div>
+					<div class="f-right">
+						<button type="button" class="pure-button btn-sm"
+						tooltips tooltip-title="'Remove group'"
+						tooltip-side="top"
+						tooltip-try="0"
+						tooltip-show-trigger="mouseover" 
+						tooltip-hide-trigger="mouseleave click" 
+						ng-click="removeGroupFromSide(side, $index)">
+						<i class="fa fa-times-circle fa-lg"></i>
+						</button>
+					</div>
+				</div>
+				<div ng-repeat="unit in group.units">
+					<input type="text"
+					class="pure-u-1"
+					placeholder="Unit {{$index+1}} role"
+					ng-model="unit.role"
+					/>
+					<span
+					class="fa fa-user-plus fa-inside-text"
+					ng-click="enterUserForUnit(unit)"
+					ng-class="{'has-name': unit.player}"
+					tooltips tooltip-title="unit.player ? 'Player: ' + unit.player : 'Enter player for this slot'" tooltip-side="bottom"
+					></span>
+				</div>
+				<p class="pure-u-1" style="border-bottom: 1px solid floralwhite"></p>
 			</div>
 		</div>
-		<div ng-repeat="unit in group.units">
-			<input type="text"
-			class="pure-u-1"
-			placeholder="Unit {{$index+1}} role"
-			ng-model="unit.role"
-			/>
-			<span
-			class="fa fa-user-plus fa-inside-text"
-			ng-click="enterUserForUnit(unit)"
-			ng-class="{'has-name': unit.player}"
-			tooltips tooltip-title="unit.player ? 'Player: ' + unit.player : 'Enter player for this slot'" tooltip-side="bottom"
-			></span>
-		</div>
-		<p style="border-bottom: 1px solid floralwhite"></p>
 	</div>
+	<p ng-if="anySideHaveGroups()">Groups: {{getTotalGroupAmount()}}, slots: {{getTotalSlotAmount()}}</p>
 </div>

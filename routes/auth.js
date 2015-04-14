@@ -1,3 +1,4 @@
+var escape = require('escape-html');
 var passport = require('passport');
 var SteamStrategy = require('passport-steam').Strategy;
 
@@ -12,7 +13,7 @@ exports.init = function(router) {
     passport.deserializeUser(function(obj, done) {
         done(null, obj);
     });
-
+    
     passport.use(new SteamStrategy({
             returnURL: 'http://' + config.hostname + ':' + config.port + config.steam.auth_callback,
             realm: 'http://' + config.hostname + ':' + config.port,
@@ -55,4 +56,13 @@ exports.init = function(router) {
         req.logout();
         res.redirect('/');
     });
+
+    router.get('/auth/check', function(req, res) {
+        var ret = {steamName: ''};
+        if (req.isAuthenticated()) {
+            ret.steamName = escape(req.session.passport.user.name).trim();
+        }
+        res.status(200).json(ret);
+    }); 
+
 };

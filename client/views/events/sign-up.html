@@ -1,0 +1,18 @@
+<h1 class="header">Event</h1>
+
+<img-loading ng-if="!event && !error"></img-loading>
+<p ng-if="error">{{error}}</p>
+
+<div class="mt-2" ng-if="event">
+
+	<h2>{{event.eventType}}{{event.amountSlots}} - {{event.name}}</h2>
+	<p>Author(s): {{event.createdBy}}</p>
+	<p>When: {{event.date | dateLocalize | date:'d MMMM yyyy. HH:mm'}}</p>
+	<img class="pure-img" ng-src="{{event.imageUrl}}">
+	<div class="mt-2 white-border l-box" ng-if="event.description">
+		<span>
+			<pre class="event-desc">{{event.description}}</pre>
+		</span>
+	</div>
+	
+</div>

@@ -22,12 +22,11 @@
 <body ng-app="app">
 	<div id="layout" ng-controller="appNavigationMenu" ng-class="{'active': mobileMenuActive}">
 		<app-menu></app-menu>
-
 		<div id="main">
-			<div class="content pure-g" ng-view></div>
+			<div class="content" ng-view></div>
 		</div>
 	</div>
-
+	
 	<script type="text/javascript" src="js/vendor.min.js"></script>	
 	<script type="text/javascript" src="js/app.min.js"></script>
 </body>

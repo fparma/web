@@ -15,13 +15,13 @@ module.exports = function(name) {
 		function init() {
 			$http.get('/events/list')
 			.success(function(response) {
-				response.data.forEach(function(event) {
-					event.date = new Date(event.date);
-				});
-
 				$scope.events = response.data;
+			})
+			.error(function(response) {
+				$scope.error = response.error;
 			});
 		}
+		
 		init();
 
 	}]);

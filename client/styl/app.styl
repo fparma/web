@@ -1,3 +1,6 @@
+
+
+
 @import 'menu.styl';
 
 body
@@ -19,6 +22,10 @@ html, button, input, select, textarea,
   
 h1, h2, h3, h4, h5, h6, p, span
   color: white
+
+.pure-button
+  span, p
+    color: black
   
 .pure-img-responsive
   max-width: 100%
@@ -61,7 +68,7 @@ This is the parent `<div>` that contains the menu and the content area.
   width: 150px
 #layout.active .menu-link
   left: 150px
-  
+
 /*
 The content `<div>` is where all your content goes.
 */
@@ -71,7 +78,6 @@ The content `<div>` is where all your content goes.
   max-width: 800px
   margin-bottom: 50px
   line-height: 1.6em
-  margin-top: 5em;
 .header
   margin: 0
   text-align: center
@@ -87,25 +93,37 @@ The content `<div>` is where all your content goes.
   margin-top: 0
 .content-subhead
   margin: 50px 0 20px 0
-  font-weight: 300
-  color: #888
-  
-.outside
-  vertical-align: middle
-  display:table-cell
-  height:100%
-
-.disp-table
-  display:table; width:100%
+  font-weight: 500
+  color: white
 
 .center-text
   text-align: center
+.loading-img
+  margin-top: 2em
   
 form
   .error
     border: 2px solid red !important
   .valid
     border: 2px solid lightgreen !important
+    
+.event-form
+  .input-date
+    padding-right: 0.4em
+  .input-time
+    padding-left: 0.4em
+  .input-event-type
+    padding-bottom: 0.4em
+  .grp-btn-fix
+    margin-right: 0.4em
+  .grp-btn-selected
+    background: rgb(28, 184, 65)
+  .group-container
+    padding: 0.4em
+textarea
+  .event-desc
+    resize: vertical
+    height: 5em
     
 .drop-box 
   background: #F8F8F8
@@ -114,6 +132,7 @@ form
   -moz-box-sizing:border-box
   -webkit-box-sizing:border-box
   text-align: center
+  height: 4em
 
 .drop-box
   span
@@ -153,11 +172,15 @@ form
   &.has-name
     color: green
 
-.event-list-table
-  td
-    span
-      font-size: 80%
+.event-list
+  width: 100%
 
+.event-desc
+  margin-top: 0;
+  font-size: 80%
+
+.white-border
+  border: 1px solid white
 
 /* -- Responsive Styles (Media Queries) ------------------------------------- */
 /*

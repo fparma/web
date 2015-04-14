@@ -5,6 +5,8 @@ var path = require('path');
 var slug = require('slug');
 var moment = require('moment');
 
+
+var errorHelper = require('../util/error-helper');
 var sqmParser = require('../util/sqm-parser');
 var Event = require('../schemas/event');
 
@@ -12,35 +14,34 @@ var Event = require('../schemas/event');
  * Creates a new event
  */
 exports.create = function(req, res) {
-
     var body = req.body ||  {};
-
+    
     new Event({
         eventType: body.eventType,
         imageUrl: body.imageUrl,
         date: body.date,
         createdBy: body.createdBy,
         name: body.name,
+        description: body.description,
         amountSlots: body.amountSlots,
         slots: body.slots
     }).save(function(err, doc) {
         if (err) {
             console.error(err);
             res.status(500).json({
-                error: err
+                error: errorHelper(err)
             });
         } else {
             res.status(200).json({
                 data: true
             });
         }
-
     });
 };
 
 /**
  * returns a list of all events
- * sorted by the event date in descending order
+ * sorted by the event date in ascending order
  */
 exports.list = function(req, res) {
 
@@ -53,23 +54,56 @@ exports.list = function(req, res) {
         createdBy: true,
         permalink: true
     })
-        .sort({
-            'date': -1
-        })
-        .lean()
-        .exec(function(err, data) {
-            if (err) {
-                console.error(err);
-                res.status(500).json({
-                    error: err
-                });
-            } else {
-                res.status(200).json({
-                    data: data
+    .sort({'date': 1})
+    .lean()
+    .exec(function(err, data) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({
+                error: errorHelper(err)
+            });
+        } else {
+            if (Array.isArray(data)) {
+                var now = moment.utc();
+                data.forEach(function(event) {
+                    event.passed = moment.utc(event.date) < now;
                 });
             }
 
-        });
+            res.status(200).json({
+                data: data
+            });
+        }
+
+    });
+};
+
+/**
+ * Finds a single event
+ */
+exports.findOne = function(req, res) {
+    console.log(req.params);
+    var id = req.params.eventId;
+
+    Event.findOne({permalink: id}, {
+        _id : false
+    })
+    .lean()
+    .exec(function(err, data) {
+        if (err) {
+            console.error(err);
+            res.status(500).json({
+                error: 'Event not found'
+            });
+        }else {
+            if (!data) {
+                res.status(500).json({error: 'Event not found'});
+            }else{
+                res.status(200).json({data: data});
+
+            }
+        }
+    });
 };
 
 /**
@@ -154,6 +188,7 @@ exports.uploadSqmFile = [multer({
 
         console.info('SQM file upload complete: %s', file.name);
         fs.readFile(file.path, 'utf8', function(err, fileStr) {
+            fs.unlink(file.path); // dont need file anymore
             if (err) {
                 console.error(err);
                 res.status(500).json({
@@ -171,7 +206,6 @@ exports.uploadSqmFile = [multer({
                             data: data
                         });
                     }
-                    fs.unlink(file.path);
                 });
             }
         });
