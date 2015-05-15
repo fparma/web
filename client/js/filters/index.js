@@ -7,7 +7,7 @@ angular.module(name, [])
 .filter('dateLocalize', function () {
 	return function (utcDate) {
 		//return new Date(utcDate + 'Z').getTime();
-		return utcDate
+		return utcDate;
 	};
 })
 .filter('capitalize', function() {

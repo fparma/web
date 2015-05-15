@@ -13,7 +13,10 @@ var groupSchema = new Schema({
 			type: String,
 			trim: true,
 			"default": null,
-			maxlength: 24
+			maxlength: 24,
+			steam_id: {
+				type: String
+			}
 		},
 		role: {
 			type: String,

@@ -39,6 +39,12 @@ h1, h2, h3, h4, h5, h6, p, span
 .l-box
   padding: 1em
   
+.sm-box
+  padding: 0.4em
+
+.xs-box 
+  padding: 0.2em
+  
 .f-left
   float: left
 
@@ -83,6 +89,7 @@ The content `<div>` is where all your content goes.
   text-align: center
   padding: 2.5em 2em 0
   border-bottom: 1px solid #eee
+  color: white
 .header h1
   margin: 0.2em 0
   font-size: 3em
@@ -106,6 +113,9 @@ form
     border: 2px solid red !important
   .valid
     border: 2px solid lightgreen !important
+
+p.err
+  color: red
     
 .event-form
   .input-date
@@ -120,6 +130,7 @@ form
     background: rgb(28, 184, 65)
   .group-container
     padding: 0.4em
+    
 textarea
   .event-desc
     resize: vertical
@@ -171,6 +182,39 @@ textarea
     cursor: pointer
   &.has-name
     color: green
+    
+.event-grp-box
+  margin-bottom: 0.6em
+  p.grp-name
+    margin-top: 0
+    margin-bottom: 0.2em
+    padding-left: 3.2px
+    
+.unit-container 
+  margin: 0.2em
+
+.btn-signup
+  width: 16px
+  height: 16px
+  color: white
+  background-color: #449d44
+  border: 1px solid #398439
+  padding-left: 0.2em
+  padding-right: 0.2em
+  padding-bottom: 0.1em
+  padding-top: 0.2em
+  &.taken:hover
+    cursor: not-allowed
+  &:hover:not(.taken)
+    cursor: pointer
+    background-color: #398439
+    border: 1px solid #449d44
+  &.kick
+    background-color: #d9543f
+    border: 1px solid #d43f3a
+    &:hover
+      background-color: #d43f3a
+      border: 1px solid #d9543f
 
 .event-list
   width: 100%

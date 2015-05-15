@@ -1,7 +1,7 @@
 <h1 class="header">Event</h1>
 
 <img-loading ng-if="!event && !error"></img-loading>
-<p ng-if="error">{{error}}</p>
+<p class="err" ng-if="error">{{error}}</p>
 
 <div class="mt-2" ng-if="event">
 
@@ -14,5 +14,25 @@
 			<pre class="event-desc">{{event.description}}</pre>
 		</span>
 	</div>
-	
+
+	<div class="pure-g mt-2" ng-repeat="s in selectableSides">
+		<h3 class="pure-u-1"ng-if="event.slots[s].groups.length">{{s | capitalize}} groups</h3>
+		<div class="pure-u-1 pure-u-md-1-2">
+			<div class="event-grp-box white-border xs-box"
+				ng-repeat="group in event.slots[s].groups"
+				ng-if="group.units.length">
+				<p class="grp-name"><i class="fa fa-users"></i> {{group.name}}</p>
+				<div>
+					<div class="unit-container xs-box" ng-repeat="unit in group.units">
+						<i class="btn-signup disabled fa fa-child fa-lg"
+						ng-click="selectSlot(s, unit)"></i>
+						<i class="btn-signup kick fa fa-times-circle fa-lg"
+						ng-click="kickSlot(s, unit)"></i>
+						<span>{{unit.role}}{{unit.player ? ':' : ''}}</span>
+						<span>{{unit.player}}</span>
+					</div>	
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

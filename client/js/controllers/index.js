@@ -1,3 +1,4 @@
+var angular = require('angular');
 var name = 'app.controllers';
 
 angular.module(name,[]);

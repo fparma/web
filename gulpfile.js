@@ -60,6 +60,7 @@ gulp.task('clean-templates', function(callback) {
             callback();
         });
 });
+
 gulp.task('templates', ['clean-templates'], function() {
     return gulp.src(paths.templates.input)
         .pipe(minifyHTML())
@@ -72,6 +73,7 @@ gulp.task('clean-img', function(callback) {
         callback();
     });
 });
+
 gulp.task('img', ['clean-img'], function() {
     return gulp.src(paths.img.input)
     .pipe(gulp.dest(paths.img.output));

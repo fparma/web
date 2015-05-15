@@ -25,5 +25,25 @@ module.exports = function(name) {
 			$scope.error = response.error;
 		});
 
+		$scope.selectSlot = function(side, unit) {
+			$http.post('event/select-slot', 
+			{
+				event: eventId,
+				side: side,
+				slot: unit._id,
+			})
+			.success(function(response) {
+				$scope.event = response.data;
+			})
+			.error(function(response) {
+				$scope.event = response.data;
+			});
+
+		};
+
+		$scope.kickSlot = function() {
+
+		};
+
 	}]);
 };

@@ -14,6 +14,11 @@ var messages = {
 module.exports = function errorHelper(err) {
 	var errors = [];
 
+	if(err.code === 11000) {
+		errors.push('An event with that name already exists!');
+		return errors;
+	}
+
 	Object.keys(err.errors).forEach(function(field) {
 		var e = err.errors[field];
 

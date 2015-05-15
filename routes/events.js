@@ -82,9 +82,9 @@ exports.list = function(req, res) {
  * Finds a single event
  */
 exports.findOne = function(req, res) {
-    console.log(req.params);
-    var id = req.params.eventId;
 
+    var id = req.params.eventId;
+    
     Event.findOne({permalink: id}, {
         _id : false
     })

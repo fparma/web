@@ -114,8 +114,7 @@ function validateImage(image, callback) {
 */
 
 eventSchema.pre('validate', function(next) {
-    var link =
-        this.get('eventType')
+    var link = this.get('eventType')
         .concat('-' + this.get('amountSlots'))
         .concat('-' + this.get('name'));
 
