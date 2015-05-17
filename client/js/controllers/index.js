@@ -1,12 +1,12 @@
-var angular = require('angular');
-var name = 'app.controllers';
+var angular = require('angular')
+var name = 'app.controllers'
 
-angular.module(name,[]);
+angular.module(name, [])
 
-require('./MenuCtrl')(name);
-require('./NewsCtrl')(name);
-require('./EventsCreateCtrl')(name);
-require('./EventsListCtrl')(name);
-require('./EventsSignUpCtrl')(name);
+require('./MenuCtrl')(name)
+require('./NewsCtrl')(name)
+require('./EventsCreateCtrl')(name)
+require('./EventsListCtrl')(name)
+require('./EventsSignUpCtrl')(name)
 
-module.exports = exports = name;
+module.exports = exports = name

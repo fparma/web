@@ -1,18 +1,18 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+var mongoose = require('mongoose')
+var Schema = mongoose.Schema
 
 var groupSchema = new Schema({
 	name: {
 		type: String,
 		trim: true,
-		"default": 'Group',
-		maxlength: 24,
+		'default': 'Group',
+		maxlength: 24
 	},
 	units: [{
 		player: {
 			type: String,
 			trim: true,
-			"default": null,
+			'default': null,
 			maxlength: 24,
 			steam_id: {
 				type: String
@@ -22,26 +22,26 @@ var groupSchema = new Schema({
 			type: String,
 			trim: true,
 			maxlength: 24,
-			"default": null
+			'default': null
 		}
 	}]
-});
-groupSchema.pre('validate', function(next) {
-	var group = this;
-	if (Array.isArray(group.units)) {
-		group.units.forEach(function(unit, idx) {
-			if (!unit.role) {
-				unit.role = 'Unit '.concat(++idx);
-			}
-		});
-	}
-	next();
-});
+})
 
-groupSchema.path('units').validate(function(units){
-    return (Array.isArray(units) && units.length);
-}, 'Group requires at least one unit');
+groupSchema.pre('validate', function (next) {
+  var group = this
+  if (Array.isArray(group.units)) {
+    group.units.forEach(function (unit, idx) {
+      if (!unit.role) {
+        unit.role = 'Unit '.concat(++idx)
+      }
+    })
+  }
+  next()
+})
 
-mongoose.model('GroupSchema', groupSchema);
+groupSchema.path('units').validate(function (units) {
+  return (Array.isArray(units) && units.length)
+}, 'Group requires at least one unit')
 
-module.exports = groupSchema;
+mongoose.model('GroupSchema', groupSchema)
+module.exports = groupSchema
