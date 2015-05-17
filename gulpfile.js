@@ -169,7 +169,7 @@ gulp.task('bundle', function (cb) {
     cache: {},
     packageCache: {},
     fullPaths: false,
-    debug: true
+    debug: createSourceMaps
   }))
   // add any other browserify options or transforms here
   bundler.transform('brfs')
